@@ -1,0 +1,141 @@
+import ts, { factory } from "typescript";
+
+export default function generateCollectionFunctions() {
+  return [generateGetItemsFromResponse(), generateGetNextPageRef()];
+}
+
+function generateGetItemsFromResponse() {
+  return factory.createFunctionDeclaration(
+    undefined,
+    undefined,
+    factory.createIdentifier("getItemsFromResponse"),
+    undefined,
+    [
+      factory.createParameterDeclaration(
+        undefined,
+        undefined,
+        factory.createIdentifier("json"),
+        undefined,
+        factory.createKeywordTypeNode(ts.SyntaxKind.AnyKeyword),
+        undefined
+      ),
+      factory.createParameterDeclaration(
+        undefined,
+        undefined,
+        factory.createIdentifier("path"),
+        undefined,
+        factory.createKeywordTypeNode(ts.SyntaxKind.StringKeyword),
+        undefined
+      ),
+      factory.createParameterDeclaration(
+        undefined,
+        undefined,
+        factory.createIdentifier("args"),
+        undefined,
+        factory.createKeywordTypeNode(ts.SyntaxKind.AnyKeyword),
+        undefined
+      ),
+      factory.createParameterDeclaration(
+        undefined,
+        undefined,
+        factory.createIdentifier("self"),
+        undefined,
+        factory.createTypeReferenceNode(factory.createIdentifier("Gref"), [
+          factory.createKeywordTypeNode(ts.SyntaxKind.AnyKeyword),
+        ]),
+        undefined
+      ),
+    ],
+    factory.createArrayTypeNode(
+      factory.createKeywordTypeNode(ts.SyntaxKind.AnyKeyword)
+    ),
+    factory.createBlock(
+      [
+        factory.createVariableStatement(
+          undefined,
+          factory.createVariableDeclarationList(
+            [
+              factory.createVariableDeclaration(
+                factory.createIdentifier("last"),
+                undefined,
+                undefined,
+                factory.createCallExpression(
+                  factory.createPropertyAccessExpression(
+                    factory.createCallExpression(
+                      factory.createPropertyAccessExpression(
+                        factory.createIdentifier("path"),
+                        factory.createIdentifier("split")
+                      ),
+                      undefined,
+                      [factory.createStringLiteral("/")]
+                    ),
+                    factory.createIdentifier("pop")
+                  ),
+                  undefined,
+                  []
+                )
+              ),
+            ],
+            ts.NodeFlags.Const
+          )
+        ),
+        factory.createReturnStatement(
+          factory.createElementAccessExpression(
+            factory.createIdentifier("json"),
+            factory.createNonNullExpression(factory.createIdentifier("last"))
+          )
+        ),
+      ],
+      true
+    )
+  );
+}
+function generateGetNextPageRef() {
+  return factory.createFunctionDeclaration(
+    undefined,
+    undefined,
+    factory.createIdentifier("getNextPageRef"),
+    undefined,
+    [
+      factory.createParameterDeclaration(
+        undefined,
+        undefined,
+        factory.createIdentifier("json"),
+        undefined,
+        factory.createKeywordTypeNode(ts.SyntaxKind.AnyKeyword),
+        undefined
+      ),
+      factory.createParameterDeclaration(
+        undefined,
+        undefined,
+        factory.createIdentifier("path"),
+        undefined,
+        factory.createKeywordTypeNode(ts.SyntaxKind.StringKeyword),
+        undefined
+      ),
+      factory.createParameterDeclaration(
+        undefined,
+        undefined,
+        factory.createIdentifier("args"),
+        undefined,
+        factory.createKeywordTypeNode(ts.SyntaxKind.AnyKeyword),
+        undefined
+      ),
+      factory.createParameterDeclaration(
+        undefined,
+        undefined,
+        factory.createIdentifier("self"),
+        undefined,
+        factory.createTypeReferenceNode(factory.createIdentifier("Gref"), [
+          factory.createKeywordTypeNode(ts.SyntaxKind.AnyKeyword),
+        ]),
+        undefined
+      ),
+    ],
+    factory.createKeywordTypeNode(ts.SyntaxKind.AnyKeyword),
+    factory.createBlock(
+      [factory.createReturnStatement(factory.createNull())],
+      true
+    )
+  );
+}
